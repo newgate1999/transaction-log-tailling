@@ -1,0 +1,24 @@
+{
+  "properties": [
+    {
+      "name": "custom.properties",
+      "type": "java.util.Map"
+    },
+    {
+      "name": "keycloak.policy-enforcer-config.enforcement-mode",
+      "type": "org.keycloak.representations.adapters.config.PolicyEnforcerConfig.EnforcementMode"
+    },
+    {
+      "name": "keycloak.policy-enforcer-config.lazy-load-paths",
+      "type": "java.lang.Boolean"
+    },
+    {
+      "name": "keycloak.policy-enforcer-config.path-cache-config.life-span",
+      "type": "java.lang.Long"
+    },
+    {
+      "name": "keycloak.policy-enforcer-config.paths",
+      "type": "java.util.List<org.keycloak.representations.adapters.config.PolicyEnforcerConfig.PathConfig>"
+    }
+  ]
+}

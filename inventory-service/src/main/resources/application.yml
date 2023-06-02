@@ -1,0 +1,28 @@
+server:
+  port: 9099
+spring:
+  application:
+    name: inventory-service
+  jpa:
+    show-sql: false
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+    generate-ddl: true
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=inventory
+    username: postgres
+    password: postgres
+  cloud:
+    function:
+      definition: handleReserveProductStockRequest
+    stream:
+      kafka:
+        binder:
+          brokers: localhost:9092
+      bindings:
+        handleReserveProductStockRequest-in-0:
+          destination: ORDER.events
+          binder: kafka
+          content-type: text/plain
+          group: ${spring.application.name}

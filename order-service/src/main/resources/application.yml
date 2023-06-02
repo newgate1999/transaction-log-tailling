@@ -1,0 +1,58 @@
+server:
+  port: 9095
+spring:
+  application:
+    name: order-service
+  jpa:
+    show-sql: false
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+    generate-ddl: true
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=order_schema
+    username: postgres
+    password: postgres
+  cloud:
+    function:
+      definition: startSaga;reserveCustomerBalanceStage;reserveProductStockStage
+    stream:
+      kafka:
+        binder:
+          brokers: localhost:9092
+      bindings:
+        reserveCustomerBalanceStage-in-0:
+          destination: CUSTOMER.events
+          binder: kafka
+          content-type: text/plain
+          group: ${spring.application.name}
+        reserveProductStockStage-in-0:
+          destination: PRODUCT.events
+          binder: kafka
+          content-type: text/plain
+          group: ${spring.application.name}
+#keycloak:
+#  auth-server-url: http://localhost:8080/
+#  principal-attribute: preferred_username
+#  credentials:
+#    secret: qdwFNRZz1TyXOXNqrKH20LMSwfb6PbVq
+#  realm: internal
+#  bearer-only: 'true'
+#  use-resource-role-mappings: 'false'
+#  resource: sale-service
+#  ssl-required: external
+#  cors: 'true'
+#  securityConstraints[0]:
+#    auth-roles[0]: '*'
+#    securityCollections[0]:
+#      patterns[0]: /orders/*
+#  policyEnforcerConfig:
+#    enforcementMode: enforcing
+#    paths[0]:
+#      path: /orders/*
+#      methods[0]:
+#        method: GET
+#        scopes[0]: VIEW
+#      methods[1]:
+#        method: POST
+#        scopes[0]: CREATE
